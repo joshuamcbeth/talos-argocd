@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fluent-bit
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://fluent.github.io/helm-charts
+    targetRevision: 0.54.0
+    chart: fluent-bit
+    helm:
+      values: |
+        daemonSet:
+          hostNetwork: true
+          dnsPolicy: ClusterFirstWithHostNet
+
+        backend: elasticsearch
+        elasticsearch:
+          host: "elasticsearch-master"
+          port: 9200
+          index: "kubernetes-logs"
+          tls:
+            enabled: false
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: logging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    dependsOn:
+    - name: elasticsearch
+      namespace: argocd
