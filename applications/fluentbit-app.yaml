@@ -26,6 +26,8 @@ spec:
                   Host elasticsearch-master.elastic-system.svc.cluster.local
                   Logstash_Format On
                   Retry_Limit False
+                  TLS On
+                  TLS.Verify Off
               [OUTPUT]
                   Name es
                   Match host.*
@@ -33,6 +35,8 @@ spec:
                   Logstash_Format On
                   Logstash_Prefix node
                   Retry_Limit False
+                  TLS On
+                  TLS.Verify Off
 
   destination:
     server: 'https://kubernetes.default.svc'
