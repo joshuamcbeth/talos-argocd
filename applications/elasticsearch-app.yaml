@@ -5,31 +5,32 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    repoURL: https://helm.elastic.co
-    targetRevision: 8.5.1
-    chart: elasticsearch
-    helm:
-      values: |
-        clusterName: es-cluster
-        nodeGroup: data
-        replicas: 1
-        resources:
-          requests:
-            memory: "1Gi"
-        volumeClaimTemplates:
-          - metadata:
-              name: elasticsearch-data
-            spec:
-              storageClassName: "local-path"
-              accessModes: [ "ReadWriteOnce" ]
-              resources:
-                requests:
-                  storage: 10Gi
+  sources:
+    - repoURL: 'https://github.com/jmcbeth/talos-argocd.git'
+      targetRevision: HEAD
+      path: infrastructure/elastic-system
+    - repoURL: https://helm.elastic.co
+      targetRevision: 8.5.1
+      chart: elasticsearch
+      helm:
+        values: |
+          clusterName: es-cluster
+          nodeGroup: data
+          replicas: 1
+          resources:
+            requests:
+              memory: "1Gi"
+          volumeClaimTemplates:
+            - metadata:
+                name: elasticsearch-data
+              spec:
+                storageClassName: "local-path"
+                accessModes: [ "ReadWriteOnce" ]
+                resources:
+                  requests:
+                    storage: 10Gi
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: elastic-system
   syncPolicy:
     automated: { prune: true, selfHeal: true }
-    syncOptions:
-      - CreateNamespace=true
