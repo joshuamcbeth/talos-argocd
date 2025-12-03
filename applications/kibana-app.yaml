@@ -11,6 +11,10 @@ spec:
     chart: kibana
     helm:
       values: |
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
         elasticsearchHosts: https://elasticsearch-master.elastic-system.svc:9200
         service:
           type: LoadBalancer

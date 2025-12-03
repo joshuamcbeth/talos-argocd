@@ -18,6 +18,10 @@ spec:
       chart: fluent-bit
       helm:
         values: |
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "128Mi"
           envFrom:
             - secretRef:
                 name: elasticsearch-user-auth
