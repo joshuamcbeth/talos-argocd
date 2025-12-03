@@ -20,6 +20,3 @@ spec:
     namespace: elastic-system
   syncPolicy:
     automated: { prune: true, selfHeal: true }
-    dependsOn:
-    - name: elasticsearch
-      namespace: argocd
