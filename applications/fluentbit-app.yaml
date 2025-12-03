@@ -26,6 +26,11 @@ spec:
             - secretRef:
                 name: elasticsearch-user-auth
           config:
+            filters: |
+              [FILTER]
+                  Name modify
+                  Match kube.*
+                  Rename kubernetes.labels.app kubernetes.labels.app_name
             outputs: |
               [OUTPUT]
                   Name es
