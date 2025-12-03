@@ -33,6 +33,7 @@ spec:
                   TLS.Verify Off
                   HTTP_User ${USERNAME}
                   HTTP_Passwd ${PASSWORD}
+                  Suppress_Type_Name On
               [OUTPUT]
                   Name es
                   Match host.*
@@ -44,6 +45,7 @@ spec:
                   TLS.Verify Off
                   HTTP_User ${USERNAME}
                   HTTP_Passwd ${PASSWORD}
+                  Suppress_Type_Name On
 
   destination:
     server: 'https://kubernetes.default.svc'
