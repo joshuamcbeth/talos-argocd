@@ -24,7 +24,7 @@ spec:
 
           backend: elasticsearch
           elasticsearch:
-            host: "elasticsearch-master"
+            host: "elasticsearch-master.elastic-system.svc.cluster.local"
             port: 9200
             index: "kubernetes-logs"
             tls:
