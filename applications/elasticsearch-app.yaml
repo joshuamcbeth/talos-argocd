@@ -6,9 +6,6 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: 'https://github.com/jmcbeth/talos-argocd.git'
-      targetRevision: HEAD
-      path: infrastructure/elastic-system
     - repoURL: https://helm.elastic.co
       targetRevision: 8.5.1
       chart: elasticsearch
@@ -34,3 +31,6 @@ spec:
     namespace: elastic-system
   syncPolicy:
     automated: { prune: true, selfHeal: true }
+    dependsOn:
+    - name: elastic-system-namespace
+      namespace: argocd
