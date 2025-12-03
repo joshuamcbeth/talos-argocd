@@ -31,8 +31,8 @@ spec:
                   Retry_Limit False
                   TLS On
                   TLS.Verify Off
-                  User ${USERNAME}
-                  Password ${PASSWORD}
+                  HTTP_User ${USERNAME}
+                  HTTP_Passwd ${PASSWORD}
               [OUTPUT]
                   Name es
                   Match host.*
@@ -42,8 +42,8 @@ spec:
                   Retry_Limit False
                   TLS On
                   TLS.Verify Off
-                  User ${USERNAME}
-                  Password ${PASSWORD}
+                  HTTP_User ${USERNAME}
+                  HTTP_Passwd ${PASSWORD}
 
   destination:
     server: 'https://kubernetes.default.svc'
