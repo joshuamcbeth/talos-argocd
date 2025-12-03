@@ -31,6 +31,3 @@ spec:
     namespace: elastic-system
   syncPolicy:
     automated: { prune: true, selfHeal: true }
-    dependsOn:
-    - name: elastic-system-namespace
-      namespace: argocd
