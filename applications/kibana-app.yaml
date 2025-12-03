@@ -11,7 +11,7 @@ spec:
     chart: kibana
     helm:
       values: |
-        elasticsearchHosts: elasticsearch-master.elastic-system.svc.cluster.local
+        elasticsearchHosts: https://elasticsearch-master.elastic-system.svc.cluster.local:9200
         service:
           type: LoadBalancer
 
