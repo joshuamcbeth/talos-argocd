@@ -7,23 +7,30 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    repoURL: https://fluent.github.io/helm-charts
-    targetRevision: 0.54.0
-    chart: fluent-bit
-    helm:
-      values: |
-        daemonSet:
-          hostNetwork: true
-          dnsPolicy: ClusterFirstWithHostNet
+  sources:
+    - repoURL: 'https://github.com/joshuamcbeth/talos-argocd.git'
+      targetRevision: HEAD
+      path: infrastructure/fluent-bit
+      name: config-crds
 
-        backend: elasticsearch
-        elasticsearch:
-          host: "elasticsearch-master"
-          port: 9200
-          index: "kubernetes-logs"
-          tls:
-            enabled: false
+    - repoURL: https://fluent.github.io/helm-charts
+      targetRevision: 0.54.0
+      chart: fluent-bit
+      helm:
+        values: |
+          daemonSet:
+            hostNetwork: true
+            dnsPolicy: ClusterFirstWithHostNet
+
+          backend: elasticsearch
+          elasticsearch:
+            host: "elasticsearch-master"
+            port: 9200
+            index: "kubernetes-logs"
+            tls:
+              enabled: false
+
+
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: logging
@@ -31,5 +38,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
