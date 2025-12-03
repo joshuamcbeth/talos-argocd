@@ -21,8 +21,6 @@ spec:
           volumeClaimTemplates:
             - metadata:
                 name: elasticsearch-data
-                annotations:
-                  volume.kubernetes.io/selected-node: ""
               spec:
                 storageClassName: "local-path"
                 accessModes: [ "ReadWriteOnce" ]
