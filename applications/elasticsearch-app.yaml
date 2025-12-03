@@ -24,7 +24,7 @@ spec:
                 annotations:
                   volume.kubernetes.io/selected-node: ""
               spec:
-                storageClassName: ""
+                storageClassName: "local-path"
                 accessModes: [ "ReadWriteOnce" ]
                 resources:
                   requests:
