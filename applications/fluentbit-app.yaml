@@ -18,20 +18,21 @@ spec:
       chart: fluent-bit
       helm:
         values: |
-          outputs: |
-            [OUTPUT]
-                Name es
-                Match kube.*
-                Host elasticsearch-master.elastic-system.svc.cluster.local
-                Logstash_Format On
-                Retry_Limit False
-            [OUTPUT]
-                Name es
-                Match host.*
-                Host elasticsearch-master.elastic-system.svc.cluster.local
-                Logstash_Format On
-                Logstash_Prefix node
-                Retry_Limit False
+          config:
+            outputs: |
+              [OUTPUT]
+                  Name es
+                  Match kube.*
+                  Host elasticsearch-master.elastic-system.svc.cluster.local
+                  Logstash_Format On
+                  Retry_Limit False
+              [OUTPUT]
+                  Name es
+                  Match host.*
+                  Host elasticsearch-master.elastic-system.svc.cluster.local
+                  Logstash_Format On
+                  Logstash_Prefix node
+                  Retry_Limit False
 
   destination:
     server: 'https://kubernetes.default.svc'
