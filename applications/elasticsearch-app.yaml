@@ -31,3 +31,5 @@ spec:
     namespace: elastic-system
   syncPolicy:
     automated: { prune: true, selfHeal: true }
+    syncOptions:
+      - CreateNamespace=true
