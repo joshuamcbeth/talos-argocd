@@ -17,6 +17,15 @@ spec:
         resources:
           requests:
             memory: "1Gi"
+        volumeClaimTemplates:
+          - metadata:
+              name: elasticsearch-data
+            spec:
+              storageClassName: "local-path"
+              accessModes: [ "ReadWriteOnce" ]
+              resources:
+                requests:
+                  storage: 10Gi
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: elastic-system
