@@ -38,6 +38,7 @@ spec:
                   HTTP_User ${USERNAME}
                   HTTP_Passwd ${PASSWORD}
                   Suppress_Type_Name On
+                  Trace_Error On
               [OUTPUT]
                   Name es
                   Match host.*
@@ -50,6 +51,7 @@ spec:
                   HTTP_User ${USERNAME}
                   HTTP_Passwd ${PASSWORD}
                   Suppress_Type_Name On
+                  Trace_Error On
 
   destination:
     server: 'https://kubernetes.default.svc'
