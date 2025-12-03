@@ -18,18 +18,21 @@ spec:
       chart: fluent-bit
       helm:
         values: |
-          daemonSet:
-            hostNetwork: true
-            dnsPolicy: ClusterFirstWithHostNet
-
-          backend: elasticsearch
-          elasticsearch:
-            host: "elasticsearch-master.elastic-system.svc.cluster.local"
-            port: 9200
-            index: "kubernetes-logs"
-            tls:
-              enabled: false
-
+          hostNetwork: true
+          outputs: |
+            [OUTPUT]
+                Name es
+                Match kube.*
+                Host elasticsearch-master.elastic-system.svc.cluster.local
+                Logstash_Format On
+                Retry_Limit False
+            [OUTPUT]
+                Name es
+                Match host.*
+                Host elasticsearch-master.elastic-system.svc.cluster.local
+                Logstash_Format On
+                Logstash_Prefix node
+                Retry_Limit False
 
   destination:
     server: 'https://kubernetes.default.svc'
