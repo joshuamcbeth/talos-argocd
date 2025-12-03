@@ -18,6 +18,9 @@ spec:
       chart: fluent-bit
       helm:
         values: |
+          envFrom:
+            - secretRef:
+                name: elasticsearch-user-auth
           config:
             outputs: |
               [OUTPUT]
@@ -28,6 +31,8 @@ spec:
                   Retry_Limit False
                   TLS On
                   TLS.Verify Off
+                  User ${USERNAME}
+                  Password ${PASSWORD}
               [OUTPUT]
                   Name es
                   Match host.*
@@ -37,6 +42,8 @@ spec:
                   Retry_Limit False
                   TLS On
                   TLS.Verify Off
+                  User ${USERNAME}
+                  Password ${PASSWORD}
 
   destination:
     server: 'https://kubernetes.default.svc'
