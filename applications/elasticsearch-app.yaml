@@ -19,7 +19,7 @@ spec:
             storageClassName: "local-path"
             resources:
               requests:
-                storage: 10Gi
+                storage: 5Gi
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: elastic-system
