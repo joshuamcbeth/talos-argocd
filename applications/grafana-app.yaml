@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://grafana.github.io/helm-charts
+    targetRevision: 7.0.10
+    chart: grafana
+    helm:
+      values: |
+        namespaceOverride: monitoring
+
+        persistence:
+          enabled: true
+          type: pvc
+          size: 2Gi
+          storageClassName: "local-path"
+
+        admin:
+          existingSecret: grafana-admin-secret
+          userKey: admin-user
+          passwordKey: admin-password
+
+        service:
+          type: LoadBalancer
+          port: 80
+          targetPort: 3000
+
+        datasources:
+          datasources.yaml:
+            apiVersion: 1
+            datasources:
+              - name: Prometheus
+                type: prometheus
+                url: http://prometheus-stack-kube-prom-prometheus.monitoring.svc.cluster.local:9090
+                access: proxy
+                isDefault: true
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: monitoring
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
