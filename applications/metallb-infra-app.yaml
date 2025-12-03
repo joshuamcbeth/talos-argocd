@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb-infra
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - repoURL: 'https://metallb.github.io/metallb'
+      targetRevision: 0.15.2
+      chart: metallb
+      name: core-chart
+
+    - repoURL: 'https://github.com/joshuamcbeth/talos-argocd.git'
+      targetRevision: HEAD
+      path: infrastructure/metallb
+      name: config-crds
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: metallb-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=false
