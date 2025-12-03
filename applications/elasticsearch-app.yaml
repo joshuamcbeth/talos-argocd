@@ -11,18 +11,8 @@ spec:
       chart: elasticsearch
       helm:
         values: |
-          clusterName: es-cluster
-          nodeGroup: data
-          replicas: 1
-          resources:
-            requests:
-              memory: "768Mi"
-              cpu: "250m"
           volumeClaimTemplate:
-            - metadata:
-                name: elasticsearch-data
             storageClassName: "local-path"
-            accessModes: [ "ReadWriteOnce" ]
             resources:
               requests:
                 storage: 10Gi
