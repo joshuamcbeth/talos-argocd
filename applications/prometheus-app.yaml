@@ -35,6 +35,15 @@ spec:
 
           prometheus:
             prometheusSpec:
+              initContainers:
+                - name: fix-permissions
+                  image: busybox:latest
+                  command: ['sh', '-c', 'chown -R 1000:2000 /prometheus']
+                  securityContext:
+                     runAsUser: 0
+                  volumeMounts:
+                    - name: prometheus-prometheus-stack-kube-prom-prometheus-db-prometheus-prometheus-stack-kube-prom-prometheus-0 # Name of Prometheus data volume
+                      mountPath: /prometheus
               retention: 30d
               storageSpec:
                 volumeClaimTemplate:
