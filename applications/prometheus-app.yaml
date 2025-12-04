@@ -44,7 +44,6 @@ spec:
                         storage: 5Gi
                     storageClassName: "local-path"
                     accessModes: ["ReadWriteOnce"]
-                    selector: {}
               serviceMonitorSelectorNilUsesHelmValues: false
               podMonitorSelectorNilUsesHelmValues: false
               serviceMonitorNamespaceSelector: {}
