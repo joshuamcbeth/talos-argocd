@@ -7,42 +7,48 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    repoURL: https://prometheus-community.github.io/helm-charts
-    targetRevision: 79.11.0
-    chart: kube-prometheus-stack
-    helm:
-      values: |
-        namespaceOverride: monitoring
-        grafana:
-          enabled: false
-        alertmanager:
-          enabled: true
-          storage:
-            volumeClaimTemplate:
-              spec:
-                storageClassName: "local-path"
-                accessModes: ["ReadWriteOnce"]
-                resources:
-                  requests:
-                    storage: 1Gi
+  sources:
+    - repoURL: 'https://github.com/joshuamcbeth/talos-argocd.git'
+      targetRevision: HEAD
+      path: infrastructure/prometheus
+      name: config-crds
 
-        prometheus:
-          prometheusSpec:
-            retention: 30d
-            storageSpec:
+
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      targetRevision: 79.11.0
+      chart: kube-prometheus-stack
+      helm:
+        values: |
+          namespaceOverride: monitoring
+          grafana:
+            enabled: false
+          alertmanager:
+            enabled: true
+            storage:
               volumeClaimTemplate:
                 spec:
+                  storageClassName: "local-path"
+                  accessModes: ["ReadWriteOnce"]
                   resources:
                     requests:
-                      storage: 5Gi
-                  storageClassName: "local-path"
-            serviceMonitorSelectorNilUsesHelmValues: false
-            podMonitorSelectorNilUsesHelmValues: false
-            serviceMonitorNamespaceSelector: {}
-            podMonitorNamespaceSelector: {}
-            serviceMonitorSelector: {}
-            podMonitorSelector: {}
+                      storage: 1Gi
+
+          prometheus:
+            prometheusSpec:
+              retention: 30d
+              storageSpec:
+                volumeClaimTemplate:
+                  spec:
+                    resources:
+                      requests:
+                        storage: 5Gi
+                    storageClassName: "local-path"
+              serviceMonitorSelectorNilUsesHelmValues: false
+              podMonitorSelectorNilUsesHelmValues: false
+              serviceMonitorNamespaceSelector: {}
+              podMonitorNamespaceSelector: {}
+              serviceMonitorSelector: {}
+              podMonitorSelector: {}
 
   destination:
     server: 'https://kubernetes.default.svc'
