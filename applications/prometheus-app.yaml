@@ -23,7 +23,7 @@ spec:
           grafana:
             enabled: false
           alertmanager:
-            enabled: true
+            enabled: false
             storage:
               volumeClaimTemplate:
                 spec:
@@ -43,6 +43,8 @@ spec:
                       requests:
                         storage: 5Gi
                     storageClassName: "local-path"
+                    accessModes: ["ReadWriteOnce"]
+                    selector: {}
               serviceMonitorSelectorNilUsesHelmValues: false
               podMonitorSelectorNilUsesHelmValues: false
               serviceMonitorNamespaceSelector: {}
