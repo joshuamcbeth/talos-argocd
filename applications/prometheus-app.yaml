@@ -37,15 +37,7 @@ spec:
             prometheusSpec:
               securityContext:
                 runAsNonRoot: false
-              initContainers:
-                - name: fix-permissions
-                  image: busybox:latest
-                  command: ['sh', '-c', 'chown -R 1000:2000 /prometheus']
-                  securityContext:
-                     runAsUser: 0
-                  volumeMounts:
-                    - name: prometheus-prometheus-stack-kube-prom-prometheus-db
-                      mountPath: /prometheus
+                runAsUser: 0
               retention: 30d
               storageSpec:
                 volumeClaimTemplate:
