@@ -35,6 +35,8 @@ spec:
 
           prometheus:
             prometheusSpec:
+              securityContext:
+                runAsNonRoot: false
               initContainers:
                 - name: fix-permissions
                   image: busybox:latest
