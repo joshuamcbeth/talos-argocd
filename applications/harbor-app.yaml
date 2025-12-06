@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: harbor-registry
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://helm.goharbor.io
+    targetRevision: 1.18.1
+    chart: harbor
+    helm:
+      values:
+        expose:
+          type: loadBalancer
+          tls:
+            enabled: false
+        persistence:
+          persistentVolumeClaim:
+            registry:
+              storageClass: "local-path"
+              size: 10Gi
+            jobservice:
+              jobLog:
+              storageClass: "local-path"
+              size: 1Gi
+            database:
+              storageClass: "local-path"
+              size: 1Gi
+            redis:
+              storageClass: "local-path"
+              size: 1Gi
+            trivy:
+              storageClass: "local-path"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: harbor
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - WaitForChildResources=true
