@@ -9,7 +9,6 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     cert-manager.io/cluster-issuer: "letsencrypt-porkbun"
     external-dns.alpha.kubernetes.io/hostname: "nginx-simulated.kubernetes.name"
-    external-dns.alpha.kubernetes.io/ttl: "300"
 spec:
   ingressClassName: nginx
   tls:
