@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx-simulated-container
-        image: harbor.kubernetes.name/library/nginx-simulated:a849e194cb0ed30452afd8bfb0c269e50a631378
+        image: harbor.kubernetes.name/library/nginx-simulated:ced158da013dedcc70f1fcaf443ff7ea2b99dd84
         ports:
         - containerPort: 80
           name: http-port
@@ -34,3 +34,14 @@ spec:
             port: 80
           initialDelaySeconds: 5
           periodSeconds: 10
+      - name: nginx-exporter-sidecar
+        image: quay.io/prometheus/nginx-exporter:latest
+        ports:
+        - containerPort: 9113
+          name: metrics
+        args:
+          - --nginx.scrape-uri=http://localhost:80/nginx_status
+        resources:
+          requests:
+            cpu: 10m
+            memory: 32Mi
