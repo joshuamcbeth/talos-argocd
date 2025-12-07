@@ -12,7 +12,6 @@ spec:
   minReplicaCount: 1
   maxReplicaCount: 10
   cooldownPeriod: 60
-  stabilizationWindowSeconds: 60
   pollingInterval: 15
 
   triggers:
@@ -23,3 +22,11 @@ spec:
         count(kube_pod_info{pod=~"nginx-simulated-deployment.*", namespace="nginx-simulated"})
       threshold: "5"
       serverAddress: http://prometheus-stack-kube-prom-prometheus.monitoring.svc.cluster.local:9090
+
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleUp:
+          stabilizationWindowSeconds: 60
+        scaleDown:
+          stabilizationWindowSeconds: 60
