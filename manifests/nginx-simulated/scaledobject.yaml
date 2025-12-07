@@ -22,3 +22,14 @@ spec:
         count(kube_pod_info{pod=~"nginx-simulated-deployment.*", namespace="nginx-simulated"})
       threshold: "5"
       serverAddress: http://prometheus-stack-kube-prom-prometheus.monitoring.svc.cluster.local:9090
+
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleUp:
+          policies:
+          - type: Percent
+            value: 100
+            periodSeconds: 15
+        scaleDown:
+          stabilizationWindowSeconds: 120
