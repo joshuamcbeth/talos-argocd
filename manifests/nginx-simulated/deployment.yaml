@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-simulated-deployment
+  namespace: nginx-simulated
+  labels:
+    app: nginx-simulated
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-simulated
+  template:
+    metadata:
+      labels:
+        app: nginx-simulated
+    spec:
+      containers:
+      - name: nginx-simulated-container
+        image: harbor.kubernetes.name/library/nginx-simulated:a849e194cb0ed30452afd8bfb0c269e50a631378
+        ports:
+        - containerPort: 80
+          name: http-port
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+        readinessProbe:
+          httpGet:
+            path: /index.html
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10

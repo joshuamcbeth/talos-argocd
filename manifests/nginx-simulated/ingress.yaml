@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-simulated-ingress
+  namespace: nginx-simulated
+  labels:
+    app: nginx-simulated
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-porkbun"
+    external-dns.alpha.kubernetes.io/hostname: "nginx-simulated.kubernetes.name"
+    external-dns.alpha.kubernetes.io/ttl: "300"
+spec:
+  tls:
+  - hosts:
+    - nginx-simulated.kubernetes.name
+    secretName: nginx-simulated-tls
+  rules:
+  - host: nginx-simulated.kubernetes.name
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-simulated-service
+            port:
+              number: 80
