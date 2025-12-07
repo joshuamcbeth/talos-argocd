@@ -7,36 +7,49 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    repoURL: https://helm.goharbor.io
-    targetRevision: 1.18.0
-    chart: harbor
-    helm:
-      values: |
-        expose:
-          type: loadBalancer
-          tls:
-            enabled: false
-          loadBalancer:
-            annotations:
-              external-dns.alpha.kubernetes.io/hostname: harbor.kubernetes.name
-        persistence:
-          persistentVolumeClaim:
-            registry:
-              storageClass: "local-path"
-              size: 10Gi
-            jobservice:
-              jobLog:
+  sources:
+    - repoURL: 'https://github.com/joshuamcbeth/talos-argocd.git'
+      targetRevision: HEAD
+      path: infrastructure/harbor
+      name: config-crds
+
+
+
+    - repoURL: https://helm.goharbor.io
+      targetRevision: 1.18.0
+      chart: harbor
+      helm:
+        values: |
+          expose:
+            type: ingress
+            tls:
+              enabled: true
+              certSource: secret
+              secret:
+                secretName: harbor-tls-secret
+            ingress:
+              hosts:
+                core: harbor.kubernetes.name
+              annotations:
+                external-dns.alpha.kubernetes.io/hostname: harbor.kubernetes.name
+          externalURL: https://harbor.kubernetes.name
+          persistence:
+            persistentVolumeClaim:
+              registry:
+                storageClass: "local-path"
+                size: 10Gi
+              jobservice:
+                jobLog:
+                  storageClass: "local-path"
+                  size: 1Gi
+              database:
                 storageClass: "local-path"
                 size: 1Gi
-            database:
-              storageClass: "local-path"
-              size: 1Gi
-            redis:
-              storageClass: "local-path"
-              size: 1Gi
-            trivy:
-              storageClass: "local-path"
+              redis:
+                storageClass: "local-path"
+                size: 1Gi
+              trivy:
+                storageClass: "local-path"
   destination:
     server: https://kubernetes.default.svc
     namespace: harbor
