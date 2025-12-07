@@ -19,6 +19,14 @@ spec:
           podLabels:
             app.kubernetes.io/managed-by: argocd
 
+    - repoURL: https://github.com/mdonoughe/porkbun-webhook
+      targetRevision: HEAD
+      path: deploy/porkbun-webhook
+      name: porkbun-webhook-chart
+      helm:
+        values: |
+          groupName: "porkbun.acme.solver"
+
     - repoURL: https://github.com/joshuamcbeth/talos-argocd.git
       targetRevision: HEAD
       path: infrastructure/cert-manager
