@@ -28,6 +28,7 @@ spec:
               secret:
                 secretName: harbor-tls-secret
             ingress:
+              className: "nginx"
               hosts:
                 core: harbor.kubernetes.name
               annotations:
