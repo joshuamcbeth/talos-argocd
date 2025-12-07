@@ -5,6 +5,13 @@ metadata:
   namespace: nginx-simulated
 spec:
   scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nginx-simulated-deployment
+
+  minReplicaCount: 1
+  maxReplicaCount: 10
+
   triggers:
   - type: prometheus
     metadata:
