@@ -8,10 +8,20 @@ metadata:
 spec:
   project: default
 
-  source:
-    repoURL: https://github.com/joshuamcbeth/talos-argocd.git
-    targetRevision: HEAD
-    path: infrastructure/cert-manager
+  sources:
+    - repoURL: https://charts.jetstack.io
+      targetRevision: v1.14.0
+      chart: cert-manager
+      name: cert-manager
+      helm:
+        values: |
+          installCRDs: true
+          podLabels:
+            app.kubernetes.io/managed-by: argocd
+
+    - repoURL: https://github.com/joshuamcbeth/talos-argocd.git
+      targetRevision: HEAD
+      path: infrastructure/cert-manager
 
   destination:
     server: https://kubernetes.default.svc
@@ -22,5 +32,5 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      # Allows ArgoCD to process a single file containing multiple resources
       - ServerSideApply=true
+      - PruneLast=true
