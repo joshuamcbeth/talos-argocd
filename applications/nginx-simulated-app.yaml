@@ -22,3 +22,4 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
+    - 'ResourceOverrides={"apps/v1/Deployment": [{"jsonPointers": ["/spec/replicas"]}]}'
