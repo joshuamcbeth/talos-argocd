@@ -9,7 +9,17 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-account-key
     solvers:
-    - dns01:
+    - selector:
+        dnsZones:
+          - kubernetes.name
+      dns01:
         webhook:
           groupName: porkbun.acme.solver
-          solverName: porkbun-solver
+          solverName: porkbun
+          config:
+            apiKeySecretRef:
+              name: porkbun-cert-manager-secret
+              key: api-key
+            secretKeySecretRef:
+              name: porkbun-cert-manager-secret
+              key: secret-key
