@@ -12,6 +12,7 @@ spec:
   minReplicaCount: 1
   maxReplicaCount: 10
   cooldownPeriod: 60
+  stabilizationWindowSeconds: 60
   pollingInterval: 15
 
   triggers:
