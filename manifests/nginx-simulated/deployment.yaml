@@ -5,13 +5,7 @@ metadata:
   namespace: nginx-simulated
   labels:
     app: nginx-simulated
-  annotations:
-    argocd.argoproj.io/resource-ignore-differences: |
-      [
-        {"jsonPointers": ["/spec/replicas"]}
-      ]
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: nginx-simulated
