@@ -17,6 +17,9 @@ spec:
           type: loadBalancer
           tls:
             enabled: false
+          loadBalancer:
+            annotations:
+              external-dns.alpha.kubernetes.io/hostname: harbor.kubernetes.name
         persistence:
           persistentVolumeClaim:
             registry:
