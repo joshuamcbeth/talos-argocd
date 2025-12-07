@@ -16,7 +16,7 @@ spec:
   - type: prometheus
     metadata:
       query: |
-        sum(rate(nginx_http_requests_total{job="nginx-simulated-service", namespace="nginx-simulated"}[5m])) / 
+        sum(rate(nginx_http_requests_total{job="nginx-simulated-service", namespace="nginx-simulated"}[1m])) / 
         count(kube_pod_info{pod=~"nginx-simulated-deployment.*", namespace="nginx-simulated"})
       threshold: "5"
       serverAddress: http://prometheus-stack-kube-prom-prometheus.monitoring.svc.cluster.local:9090
