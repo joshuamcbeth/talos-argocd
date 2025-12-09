@@ -35,21 +35,9 @@ spec:
 
           prometheus:
             prometheusSpec:
-#              securityContext:
-#                runAsNonRoot: false
-#                runAsUser: 0
               retention: 30d
               storageSpec:
-                volumeClaimTemplate:
-                  metadata:
-                    annotations:
-                      volumeType: local
-                  spec:
-                    resources:
-                      requests:
-                        storage: 5Gi
-                    storageClassName: "local-path"
-                    accessModes: ["ReadWriteOnce"]
+                emptyDir: {}
               serviceMonitorSelectorNilUsesHelmValues: false
               podMonitorSelectorNilUsesHelmValues: false
               serviceMonitorNamespaceSelector: {}
