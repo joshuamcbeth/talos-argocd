@@ -35,6 +35,7 @@ spec:
 
           prometheus:
             prometheusSpec:
+               replicas: 0
 #              securityContext:
 #                runAsNonRoot: false
 #                runAsUser: 0
