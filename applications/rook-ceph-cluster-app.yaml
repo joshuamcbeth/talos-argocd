@@ -18,6 +18,8 @@ spec:
         operatorNamespace: rook-ceph
         toolbox:
           enabled: true
+        cephFileSystems: []
+        cephObjectStores: []
         cephClusterSpec:
           dataDirHostPath: /var/lib/rook
           mon:
