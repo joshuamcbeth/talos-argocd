@@ -13,6 +13,8 @@ spec:
     targetRevision: v1.18.8
     helm:
       values: |
+        csi:
+          provisionerReplicas: 1
         operatorNamespace: rook-ceph
         toolbox:
           enabled: true
