@@ -19,6 +19,7 @@ spec:
       helm:
         values: |
           csi:
+            enableCephfsDriver: false
             provisionerReplicas: 1
 
   destination:
