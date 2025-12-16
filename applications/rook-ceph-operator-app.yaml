@@ -10,7 +10,7 @@ spec:
   sources:
     - repoURL: 'https://github.com/joshuamcbeth/talos-argocd.git'
       targetRevision: HEAD
-      path: infrastructure/prometheus
+      path: infrastructure/rook
       name: config
 
     - repoURL: https://charts.rook.io/release
