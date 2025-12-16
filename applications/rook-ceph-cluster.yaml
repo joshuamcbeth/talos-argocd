@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rook-ceph-cluster
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: default
+  source:
+    repoURL: https://charts.rook.io/release
+    chart: rook-ceph-cluster
+    targetRevision: v1.18.8
+    helm:
+      values: |
+        operatorNamespace: rook-ceph
+        toolbox:
+          enabled: true
+        cephClusterSpec:
+          dataDirHostPath: /var/lib/rook
+          mon:
+            count: 3
+            allowMultiplePerNode: false
+          mgr:
+            count: 1
+            allowMultiplePerNode: false
+          storage:
+            useAllNodes: true
+            useAllDevices: false
+            deviceFilter: "^vdb"
+          resources:
+            osd:
+              limits:
+                memory: "2Gi"
+              requests:
+                memory: "1Gi"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: rook-ceph
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
