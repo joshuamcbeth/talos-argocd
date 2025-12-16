@@ -16,7 +16,7 @@ spec:
     - repoURL: 'https://github.com/joshuamcbeth/talos-argocd.git'
       targetRevision: HEAD
       path: infrastructure/metallb
-      name: config-crds
+      name: config
 
   destination:
     server: 'https://kubernetes.default.svc'
