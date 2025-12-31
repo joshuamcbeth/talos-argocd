@@ -10,14 +10,19 @@ spec:
     server: 'https://kubernetes.default.svc'
     namespace: istio-system
   project: default
-  source:
-    repoURL: 'https://istio-release.storage.googleapis.com/charts'
-    targetRevision: 1.28.x
-    chart: base
-    helm:
-      parameters:
-      - name: defaultRevision
-        value: default
+  sources:
+    - repoURL: 'https://github.com/joshuamcbeth/talos-argocd.git'
+      targetRevision: HEAD
+      path: infrastructure/istio
+      name: config
+
+    - repoURL: 'https://istio-release.storage.googleapis.com/charts'
+      targetRevision: 1.28.x
+      chart: base
+      helm:
+        parameters:
+        - name: defaultRevision
+          value: default
   syncPolicy:
     automated:
       prune: true

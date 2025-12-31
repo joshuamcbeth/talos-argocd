@@ -4,7 +4,7 @@ metadata:
   name: istio-ztunnel
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "15" # Run after Control Plane
+    argocd.argoproj.io/sync-wave: "15"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
