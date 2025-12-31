@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istiod-control-plane
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: istio-system
+  project: default
+  source:
+    repoURL: 'https://istio-release.storage.googleapis.com/charts'
+    targetRevision: 1.28.x
+    chart: istiod
+    helm:
+      parameters:
+      - name: "profile"
+        value: "ambient"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
