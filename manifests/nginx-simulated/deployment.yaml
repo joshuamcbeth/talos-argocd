@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nginx-simulated-container
-        image: harbor.kubernetes.name/library/nginx-simulated:ced158da013dedcc70f1fcaf443ff7ea2b99dd84
+        image: harbor.kubernetes.name/nginx-simulated/nginx-simulated:latest
         ports:
         - containerPort: 80
           name: http-port
@@ -44,3 +44,5 @@ spec:
           requests:
             cpu: 10m
             memory: 32Mi
+      imagePullSecrets:
+      - name: harbor-cred
